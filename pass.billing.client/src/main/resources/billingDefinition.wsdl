@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch0="http://www.pass-pdam.com/ws/schemas/messages" xmlns:sch1="http://www.pass-pdam.com/ws/schemas/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.pass-pdam.com/ws/schemas/messages" targetNamespace="http://www.pass-pdam.com/ws/schemas/messages">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:types="http://www.pass-pdam.com/ws/schemas/types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.pass-pdam.com/ws/schemas/messages"><import namespace="http://www.pass-pdam.com/ws/schemas/types"/><element name="listNamaItemRequest"><complexType><all><element name="kodePDAM" type="string"/></all></complexType></element><element name="listNamaItemResponse"><complexType><sequence><element maxOccurs="unbounded" minOccurs="0" name="item" type="types:NamaItem"/></sequence></complexType></element><element name="getItemDigunakanRequest"><complexType><all><element name="kodePDAM" type="string"/></all></complexType></element><element name="getItemDigunakanResponse"><complexType><sequence><element name="items" type="string"/></sequence></complexType></element><element name="getTagihanRequest"><complexType><all><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/></all></complexType></element><element name="getTagihanResponse"><complexType><sequence><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/><element name="nama" type="string"/><element name="alamat" type="string"/><element name="golongan" type="string"/><element name="periode" type="string"/><element name="status" type="string"/><element name="kubikase" type="decimal"/><element name="jumlahRekening" type="int"/><element name="totalTagihan" type="decimal"/><element name="totalDenda" type="decimal"/><element name="grandTotal" type="decimal"/><element maxOccurs="10" minOccurs="0" name="tagihan" type="types:Tagihan"/></sequence></complexType></element><element name="bayarTagihanRequest"><complexType><sequence><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/><element name="totalBayar" type="decimal"/><element maxOccurs="10" name="periodeRekeningDibayar" type="types:PeriodeRekening"/><element minOccurs="0" name="kodeLoket" type="string"/><element minOccurs="0" name="nomorReferensi" type="string"/></sequence></complexType></element><element name="bayarTagihanResponse"><complexType><sequence><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/><element name="status" type="string"/><element name="nomorReferensi" type="string"/><element maxOccurs="unbounded" minOccurs="0" name="periodeRekeningTerbayar" type="string"/></sequence></complexType></element><element name="listPDAMRequest"/><element name="listPDAMResponse"><complexType><sequence><element maxOccurs="unbounded" minOccurs="0" name="pdamList" type="types:PDAM"/></sequence></complexType></element><element name="batalTagihanRequest"><complexType><sequence><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/><element name="reason" type="string"/><element maxOccurs="10" name="periodeDibatalkan" type="string"/></sequence></complexType></element><element name="batalTagihanResponse"><complexType><sequence><element name="kodePDAM" type="string"/><element name="noSambungan" type="string"/><element name="status" type="string"/></sequence></complexType></element></schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.pass-pdam.com/ws/schemas/types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.pass-pdam.com/ws/schemas/types"><complexType name="Tagihan"><sequence><element name="periode" type="string"/><element name="stanAwal" type="double"/><element name="stanAkhir" type="double"/><element name="kubikase" type="double"/><element name="subtotal" type="decimal"/><element name="jumlahItem" type="int"/><element name="items"><complexType><sequence><element maxOccurs="unbounded" name="item" type="tns:ItemTagihan"/></sequence></complexType></element></sequence></complexType><complexType name="ItemTagihan"><sequence><element name="namaItem" type="string"/><element name="jumlah" type="decimal"/></sequence></complexType><complexType name="PeriodeRekening"><sequence><element name="periode" type="string"/><element name="subtotal" type="decimal"/></sequence></complexType><complexType name="PDAM"><sequence><element name="kodePDAM" type="string"/><element name="nama" type="string"/></sequence></complexType><complexType name="NamaItem"><sequence><element name="nama" type="string"/><element name="deskripsi" type="string"/></sequence></complexType></schema>
+  </wsdl:types>
+  <wsdl:message name="getTagihanRequest">
+    <wsdl:part element="tns:getTagihanRequest" name="getTagihanRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listPDAMRequest">
+    <wsdl:part element="tns:listPDAMRequest" name="listPDAMRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bayarTagihanRequest">
+    <wsdl:part element="tns:bayarTagihanRequest" name="bayarTagihanRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bayarTagihanResponse">
+    <wsdl:part element="tns:bayarTagihanResponse" name="bayarTagihanResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listPDAMResponse">
+    <wsdl:part element="tns:listPDAMResponse" name="listPDAMResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listNamaItemRequest">
+    <wsdl:part element="tns:listNamaItemRequest" name="listNamaItemRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batalTagihanRequest">
+    <wsdl:part element="tns:batalTagihanRequest" name="batalTagihanRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listNamaItemResponse">
+    <wsdl:part element="tns:listNamaItemResponse" name="listNamaItemResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getItemDigunakanRequest">
+    <wsdl:part element="tns:getItemDigunakanRequest" name="getItemDigunakanRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getItemDigunakanResponse">
+    <wsdl:part element="tns:getItemDigunakanResponse" name="getItemDigunakanResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="batalTagihanResponse">
+    <wsdl:part element="tns:batalTagihanResponse" name="batalTagihanResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTagihanResponse">
+    <wsdl:part element="tns:getTagihanResponse" name="getTagihanResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Billing">
+    <wsdl:operation name="getTagihan">
+      <wsdl:input message="tns:getTagihanRequest" name="getTagihanRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getTagihanResponse" name="getTagihanResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listPDAM">
+      <wsdl:input message="tns:listPDAMRequest" name="listPDAMRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:listPDAMResponse" name="listPDAMResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bayarTagihan">
+      <wsdl:input message="tns:bayarTagihanRequest" name="bayarTagihanRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:bayarTagihanResponse" name="bayarTagihanResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listNamaItem">
+      <wsdl:input message="tns:listNamaItemRequest" name="listNamaItemRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:listNamaItemResponse" name="listNamaItemResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batalTagihan">
+      <wsdl:input message="tns:batalTagihanRequest" name="batalTagihanRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:batalTagihanResponse" name="batalTagihanResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getItemDigunakan">
+      <wsdl:input message="tns:getItemDigunakanRequest" name="getItemDigunakanRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getItemDigunakanResponse" name="getItemDigunakanResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BillingSoap11" type="tns:Billing">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getTagihan">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getTagihanRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTagihanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listPDAM">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="listPDAMRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listPDAMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bayarTagihan">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="bayarTagihanRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bayarTagihanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listNamaItem">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="listNamaItemRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listNamaItemResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batalTagihan">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="batalTagihanRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="batalTagihanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getItemDigunakan">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getItemDigunakanRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getItemDigunakanResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BillingService">
+    <wsdl:port binding="tns:BillingSoap11" name="BillingSoap11">
+      <soap:address location="https://www.pass-pdam.com/passws/billing"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
