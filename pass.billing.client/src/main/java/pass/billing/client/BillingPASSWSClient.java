@@ -108,6 +108,7 @@ public class BillingPASSWSClient extends WebServiceGatewaySupport {
 		try {
 			BayarTagihanRequest request = new BayarTagihanRequest();
 			request.setKodePDAM(kodePDAM);
+			request.setNoSambungan(nomorSambungan);
 			request.setKodeLoket(kodeLoket);
 			request.setNomorReferensi(nomorReferensi);
 			request.setTotalBayar(new BigDecimal(totalBayar));
