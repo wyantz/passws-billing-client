@@ -1,3 +1,4 @@
+com\pass\billing\wsclient\GetLPPRequest.class
 com\pass\billing\wsclient\GetTagihanRequest.class
 com\pass\billing\wsclient\GetTagihanResponse.class
 com\pass\billing\wsclient\BatalTagihanRequest.class
@@ -10,6 +11,7 @@ com\pass\billing\wsclient\ObjectFactory.class
 pass\billing\client\MyTrustManager.class
 com\pass\billing\wsclient\Tagihan.class
 com\pass\billing\wsclient\GetItemDigunakanRequest.class
+com\pass\billing\wsclient\GetLPPResponse.class
 com\pass\billing\wsclient\BayarTagihanResponse.class
 pass\billing\client\BillingPASSWSClientFactory.class
 com\pass\billing\wsclient\ListNamaItemRequest.class

@@ -3,8 +3,13 @@
  */
 package pass.billing.client;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +21,8 @@ import com.pass.billing.wsclient.BayarTagihanRequest;
 import com.pass.billing.wsclient.BayarTagihanResponse;
 import com.pass.billing.wsclient.GetItemDigunakanRequest;
 import com.pass.billing.wsclient.GetItemDigunakanResponse;
+import com.pass.billing.wsclient.GetLPPRequest;
+import com.pass.billing.wsclient.GetLPPResponse;
 import com.pass.billing.wsclient.GetTagihanRequest;
 import com.pass.billing.wsclient.GetTagihanResponse;
 import com.pass.billing.wsclient.ListNamaItemRequest;
@@ -39,6 +46,47 @@ public class BillingPASSWSClient extends WebServiceGatewaySupport {
 		this.url = url;
 	}
 
+	/**
+	 * Untuk mengambil laporan harian
+	 * @param kodePDAM Kode PDAM
+	 * @param tanggal Tanggal transaksi dengan format YYYY-mm-dd
+	 * @param folder Folder tempat file .csv akan disimpan
+	 * @return
+	 */
+	public String getLPP(String kodePDAM, String tanggal, String folder) {
+		GetLPPResponse response = null;
+		String result = null;
+		try {
+			GetLPPRequest request = new GetLPPRequest();
+			request.setKodePDAM(kodePDAM);
+			request.setTanggal(tanggal);
+			response = (GetLPPResponse) getWebServiceTemplate().marshalSendAndReceive(url, request);
+			
+			byte[] buffer = new byte[1024];
+			byte[] compressedData = response.getFile();
+			ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(compressedData));
+			ZipEntry zipEntry = zis.getNextEntry();
+			while(zipEntry != null) {
+	            File newFile = new File(folder, "LPP-"+kodePDAM+"-"+tanggal+".csv");
+	            result = newFile.getAbsolutePath();
+	            FileOutputStream fos = new FileOutputStream(newFile);
+	            int len;
+	            while ((len = zis.read(buffer)) > 0) {
+	                fos.write(buffer, 0, len);
+	            }
+	            fos.close();
+	            zipEntry = zis.getNextEntry();
+	        }
+	        zis.closeEntry();
+	        zis.close();
+			
+		    return result;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		}
+	}
+	
 	/**
 	 * Mengeluarkan daftar PDAM yang dibuka aksesnya
 	 * @return Daftar PDAM
