@@ -66,19 +66,19 @@ public class BillingPASSWSClient extends WebServiceGatewaySupport {
 			byte[] compressedData = response.getFile();
 			ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(compressedData));
 			ZipEntry zipEntry = zis.getNextEntry();
-			while(zipEntry != null) {
-	            File newFile = new File(folder, "LPP-"+kodePDAM+"-"+tanggal+".csv");
-	            result = newFile.getAbsolutePath();
-	            FileOutputStream fos = new FileOutputStream(newFile);
-	            int len;
-	            while ((len = zis.read(buffer)) > 0) {
-	                fos.write(buffer, 0, len);
-	            }
-	            fos.close();
-	            zipEntry = zis.getNextEntry();
-	        }
-	        zis.closeEntry();
-	        zis.close();
+			while (zipEntry != null) {
+				File newFile = new File(folder, "LPP-" + kodePDAM + "-" + tanggal + ".csv");
+				result = newFile.getAbsolutePath();
+				FileOutputStream fos = new FileOutputStream(newFile);
+				int len;
+				while ((len = zis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
+				fos.close();
+				zipEntry = zis.getNextEntry();
+			}
+			zis.closeEntry();
+			zis.close();
 			
 		    return result;
 		} catch (Exception e) {
