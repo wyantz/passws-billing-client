@@ -3,6 +3,8 @@
  */
 package pass.billing.client;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -45,6 +47,13 @@ public class BillingPASSWSClientFactory {
 			
 			HttpsUrlConnectionMessageSender sender = new HttpsUrlConnectionMessageSender();
 			sender.setTrustManagers(new TrustManager[] {new MyTrustManager()});
+			sender.setHostnameVerifier(new HostnameVerifier() {
+				
+				@Override
+				public boolean verify(String hostname, SSLSession session) {
+					return true;
+				}
+			});
 			gateway.setMessageSender(sender);
 		}
 		return gateway;

@@ -5,11 +5,15 @@ package pass.billing.client;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +36,8 @@ import com.pass.billing.wsclient.NamaItem;
 import com.pass.billing.wsclient.ObjectFactory;
 import com.pass.billing.wsclient.PDAM;
 import com.pass.billing.wsclient.PeriodeRekening;
+import com.pass.billing.wsclient.PostRekonRequest;
+import com.pass.billing.wsclient.PostRekonResponse;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -218,5 +224,41 @@ public class BillingPASSWSClient extends WebServiceGatewaySupport {
 		}
 		if (response!=null) return response.getItems().split(",");
 		else return null;
+	}
+	
+	public void postRekon(String kodePDAM, String tanggal, String namaFileCSV) throws Exception {
+		PostRekonResponse response = null;
+		try {
+			PostRekonRequest request = new PostRekonRequest();
+			request.setKodePDAM(kodePDAM);
+			request.setTanggal(tanggal);
+			
+			try {
+				File csvFile = new File(namaFileCSV);
+
+				FileOutputStream fos = new FileOutputStream(namaFileCSV+".zip");
+				ZipOutputStream zipOut = new ZipOutputStream(fos);
+				FileInputStream fis = new FileInputStream(csvFile);
+				ZipEntry zipEntry = new ZipEntry(csvFile.getName());
+				zipOut.putNextEntry(zipEntry);
+				final byte[] bytes = new byte[1024];
+		        int length;
+		        while((length = fis.read(bytes)) >= 0) {
+		            zipOut.write(bytes, 0, length);
+		        }
+		        zipOut.close();
+		        fis.close();
+		        fos.close();
+
+		        request.setFile(Files.readAllBytes(Paths.get(namaFileCSV+".zip")));
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+
+			response = (PostRekonResponse) getWebServiceTemplate().marshalSendAndReceive(url, request);
+			if (!response.getStatus().equals("000")) throw new RuntimeException("Gagal mengirimkan file rekonsiliasi");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 	}
 }
