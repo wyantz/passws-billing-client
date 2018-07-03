@@ -33,7 +33,7 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("             listPDAM");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://localhost:8443/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
 		
 		
 		Collection<PDAM> result = gateway.listPDAM();
@@ -42,7 +42,7 @@ public class WSTest {
 		}
 		
 		
-		GetTagihanResponse response = gateway.getTagihan("006-32580", "010300241505");
+		GetTagihanResponse response = gateway.getTagihan("006-32633", "010300241505");
 		if (response!=null) {
 			int jumlahRekening = response.getJumlahRekening();
 			log.debug("Nama Pelanggan:"+response.getNama());
@@ -68,7 +68,7 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("            bayarTagihan");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://localhost:8443/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
 		
 		Collection<PeriodeRekening> periode = new ArrayList<>();
 		PeriodeRekening pr = new PeriodeRekening();
@@ -76,7 +76,7 @@ public class WSTest {
 		pr.setSubtotal(new BigDecimal("69474"));
 		periode.add(pr);
 		
-		gateway.bayarTagihan("006-32580", "010300241505", periode, 69474, "LKT-TEST", "1234567890");
+		gateway.bayarTagihan("006-32633", "010300241505", periode, 69474, "LKT-TEST", "1234567890");
 	}
 
 	//@Test
@@ -84,11 +84,11 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("             batalBayar");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://localhost:8443/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
 		
 		Collection<String> periode = new ArrayList<>();
 		periode.add("201412");
-		gateway.batalBayar("006-32580", "010300241505", "Test", periode);
+		gateway.batalBayar("006-32633", "010300241505", "Test", periode);
 	}
 	
 	//@Test
@@ -96,7 +96,7 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("              getLPP");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://localhost:8443/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
 		String generatedFile = gateway.getLPP("006-32580", "2018-06-27", "D:/tmp/unzipTest");
 		log.debug(generatedFile);
 	}
@@ -106,7 +106,13 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("              postRekon");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://localhost:8443/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
-		gateway.postRekon("006-32580", "2018-06-27", "/tmp/REKON-POS.csv");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		gateway.postRekon("006-32633", "2018-06-27", "/tmp/REKON-POS.csv");
+		
+		/*
+		 * Contoh isi file REKON-POS.csv nya adalah sbb:
+010300241505,201412,2018-06-27 15:13:20,LKT-01,POS-123123132132,69474
+010500106505,201412,2018-06-27 16:15:10,LKT-01,POS-123414234123,38460
+		 */
 	}
 }
