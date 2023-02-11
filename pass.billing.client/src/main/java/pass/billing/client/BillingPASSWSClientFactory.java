@@ -27,28 +27,33 @@ public class BillingPASSWSClientFactory {
 		return marshaller;
 	}
 
-	private static Wss4jSecurityInterceptor securityInterceptor(String username, String password){
-        Wss4jSecurityInterceptor wss4jSecurityInterceptor = new Wss4jSecurityInterceptor();
-        wss4jSecurityInterceptor.setSecurementActions("UsernameToken");
-        wss4jSecurityInterceptor.setSecurementUsername(username);
-        wss4jSecurityInterceptor.setSecurementPassword(password);
-        wss4jSecurityInterceptor.setSecurementPasswordType("PasswordText");
-        return wss4jSecurityInterceptor;
-    }
+	private static Wss4jSecurityInterceptor securityInterceptor(String username, String password) {
+		Wss4jSecurityInterceptor wss4jSecurityInterceptor = new Wss4jSecurityInterceptor();
+		wss4jSecurityInterceptor.setSecurementActions("UsernameToken");
+		wss4jSecurityInterceptor.setSecurementUsername(username);
+		wss4jSecurityInterceptor.setSecurementPassword(password);
+		wss4jSecurityInterceptor.setSecurementPasswordType("PasswordText");
+		
+		// Agar Created tidak disertakan karena seringkali menyebabkan
+		// Error message expired. Maka cukup Nonce saja yang disertakan
+		// Biasanya 'Nonce Created'
+		wss4jSecurityInterceptor.setSecurementUsernameTokenElements("Nonce");
+		return wss4jSecurityInterceptor;
+	}
 
 	public static BillingPASSWSClient getInstance(String url, String username, String password) {
-		if (gateway==null) {
+		if (gateway == null) {
 			gateway = new BillingPASSWSClient(url);
 			gateway.setMarshaller(marshaller());
 			gateway.setUnmarshaller(marshaller());
-			
-			ClientInterceptor[] interceptors = new ClientInterceptor[] {securityInterceptor(username, password)};
+
+			ClientInterceptor[] interceptors = new ClientInterceptor[] { securityInterceptor(username, password) };
 			gateway.setInterceptors(interceptors);
-			
+
 			HttpsUrlConnectionMessageSender sender = new HttpsUrlConnectionMessageSender();
-			sender.setTrustManagers(new TrustManager[] {new MyTrustManager()});
+			sender.setTrustManagers(new TrustManager[] { new MyTrustManager() });
 			sender.setHostnameVerifier(new HostnameVerifier() {
-				
+
 				@Override
 				public boolean verify(String hostname, SSLSession session) {
 					return true;
