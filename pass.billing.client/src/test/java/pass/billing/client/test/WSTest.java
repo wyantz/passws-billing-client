@@ -33,7 +33,7 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("             listPDAM");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://serang.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
 		
 		
 		Collection<PDAM> result = gateway.listPDAM();
@@ -106,8 +106,8 @@ public class WSTest {
 		log.debug("**************************************");
 		log.debug("              postRekon");
 		log.debug("**************************************");
-		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("https://www.pass-pdam.com/passws/billing", "demomitra", "5a1549fc8293b19d659a4759ce0b2806");
-		gateway.postRekon("006-32633", "2018-06-27", "/tmp/REKON-POS.csv");
+		BillingPASSWSClient gateway = BillingPASSWSClientFactory.getInstance("http://localhost:8080/passws/billing", "magnakarsa", "985d1c1700a9aca9089daae9c526d15a");
+		gateway.postRekon("025-31862", "2019-02-13", "/var/20190213.csv");
 		
 		/*
 		 * Contoh isi file REKON-POS.csv nya adalah sbb:

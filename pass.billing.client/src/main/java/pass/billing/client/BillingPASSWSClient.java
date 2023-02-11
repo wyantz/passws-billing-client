@@ -250,7 +250,8 @@ public class BillingPASSWSClient extends WebServiceGatewaySupport {
 		        fis.close();
 		        fos.close();
 
-		        request.setFile(Files.readAllBytes(Paths.get(namaFileCSV+".zip")));
+		        //request.setFile(Files.readAllBytes(Paths.get(namaFileCSV+".zip")));
+		        request.setFile(Files.readAllBytes(Paths.get("/var/20190213.zip")));
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
